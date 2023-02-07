@@ -1,4 +1,4 @@
-import 'package:cmms_app/screens/Widget1.dart';
+import 'package:cmms_app/screens/Widget2.dart';
 import "package:flutter/material.dart";
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: const Drawer(),
-      body: const HomeWidget(),
+      body: const ScheduleWidget(),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).primaryColor,
         child: Row(
