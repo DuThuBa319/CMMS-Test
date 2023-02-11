@@ -1,7 +1,10 @@
-import 'package:cmms_app/screens/HomeScreen.dart';
+import 'package:cmms_app/domain/entities/app_data.dart';
+
+import 'package:cmms_app/presentation/theme/theme_data.dart';
+
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:page_transition/page_transition.dart';
+
+import 'screens/MainScreen/MainScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,15 +22,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Practice',
-      theme: ThemeData(primaryColor: const Color.fromARGB(255, 0, 29, 55)),
-      home: AnimatedSplashScreen(
-          splashIconSize: 150,
-          centered: true,
-          duration: 2000,
-          splashTransition: SplashTransition.sizeTransition,
-          splash: 'lib/assets/CHA_logo.png',
-          pageTransitionType: PageTransitionType.rightToLeft,
-          nextScreen: const HomeScreen()),
+      theme: AppData.getTheme(SupportedTheme.light).data,
+      home: const MainScreen(),
     );
   }
 }

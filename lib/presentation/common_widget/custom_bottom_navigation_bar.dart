@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:badges/badges.dart';
+import 'package:cmms_app/presentation/theme/shadow.dart';
+import 'package:cmms_app/presentation/theme/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../common/utils.dart';
-import '../theme/shadow.dart';
-import '../theme/theme_color.dart';
 import 'cache_network_image_wrapper.dart';
 
 class BottomBarItemData {
@@ -82,7 +82,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                 Container(
                   decoration: const BoxDecoration(
                     boxShadow: boxShadowLight,
-                    color: Colors.white,
+                    color: AppColor.barColor,
                   ),
                   padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).padding.bottom,
@@ -157,7 +157,7 @@ class BottomItem extends StatelessWidget {
     required this.item,
     this.onPressed,
     this.selected = false,
-    this.iconSize = 24.0,
+    this.iconSize = 20.0,
   }) : super(key: key);
 
   @override
@@ -173,20 +173,27 @@ class BottomItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Badge(
-              showBadge: count > 0,
-              badgeContent: Text(
-                '${min(count, 99)}${count > 99 ? '+' : ''}',
-                style: theme.textTheme.subtitle1?.copyWith(
-                  fontSize: count > 99 ? 8 : 10,
-                  color: Colors.white,
+            Container(
+              width: 64,
+              height: 32,
+              decoration: BoxDecoration(
+                  color: AppColor.white,
+                  borderRadius: BorderRadius.circular(24)),
+              child: Badge(
+                showBadge: count > 0,
+                badgeContent: Text(
+                  '${min(count, 99)}${count > 99 ? '+' : ''}',
+                  style: theme.textTheme.subtitle1?.copyWith(
+                    fontSize: count > 99 ? 8 : 10,
+                    color: AppColor.white,
+                  ),
                 ),
+                padding: EdgeInsets.all(count > 9 ? 3 : 5),
+                animationType: BadgeAnimationType.scale,
+                child: _buildIcon(),
               ),
-              padding: EdgeInsets.all(count > 9 ? 3 : 5),
-              animationType: BadgeAnimationType.scale,
-              child: _buildIcon(),
             ),
-            const SizedBox(height: 3),
+            const SizedBox(height: 4),
             if (item.label?.isNotEmpty == true)
               Text(
                 item.label!,
@@ -231,14 +238,12 @@ class BottomItem extends StatelessWidget {
     if (selected) {
       return theme.textTheme.subtitle1!.copyWith(
         color: theme.colorScheme.secondary,
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: FontWeight.bold,
       );
     } else {
       return theme.textTheme.subtitle1!.copyWith(
-        color: AppColor.primaryText,
-        fontSize: 10,
-      );
+          color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500);
     }
   }
 }

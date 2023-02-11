@@ -63,10 +63,10 @@ class MenuItemView extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          ?.copyWith(color: Colors.black, fontSize: titleSize),
+                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                          color: Colors.black,
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                   if (tailIcon != null) tailIcon!,

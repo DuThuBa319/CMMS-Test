@@ -5,8 +5,9 @@ class AppColor {
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static const Color primaryColor = Color(0xFF03a1e4);
+  static const Color barColor = Color(0xff0001e38);
   static const Color primaryColorLight = Color(0xFF43c8f5);
-  static const Color cardBackground = Color(0xFFf7f8f8);
+  static const Color cardBackground = Color(0xFFF3F3F3);
   static const Color iconSelected = primaryColor;
   static const Color iconUnselected = Colors.grey;
   static const Color lightGrey = Color(0xFFbebebe);

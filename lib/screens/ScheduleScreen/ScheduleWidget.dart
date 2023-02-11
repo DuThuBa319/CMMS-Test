@@ -1,6 +1,8 @@
+import 'package:cmms_app/presentation/common_widget/date_picker/cupertino_date_picker_custom.dart';
 import 'package:cmms_app/presentation/common_widget/item_devider.dart';
 import 'package:cmms_app/presentation/common_widget/menu_item_view.dart';
 import "package:flutter/material.dart";
+import 'package:intl/intl.dart';
 
 class ScheduleWidget extends StatefulWidget {
   const ScheduleWidget({super.key});
@@ -10,20 +12,57 @@ class ScheduleWidget extends StatefulWidget {
 }
 
 class _ScheduleWidgetState extends State<ScheduleWidget> {
+  //String currentDate = DateFormat("dd/MM/yyyy").format(DateTime.now());
+  DateTime currentDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.all(20),
-          color: Colors.grey,
-          height: 20,
-        ),
+            height: 32,
+            width: 200,
+            margin: const EdgeInsets.only(top: 23, bottom: 23),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all()),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: Text(
+                    DateFormat("dd/MM/yyyy").format(currentDate),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                IconButton(
+                    padding: const EdgeInsets.only(bottom: 3),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: const Text('Chọn thời gian'),
+                              actions: [
+                                CupertinoDatePickerCustom(
+                                  initialDateTime: currentDate,
+                                  onCancelled: null,
+                                  onComfirmed: SetDate,
+                                )
+                              ],
+                            );
+                          });
+                    },
+                    icon: const Icon(Icons.calendar_month))
+              ],
+            )),
 
         //-----------------------------//
         Expanded(
             child: Container(
-          margin: const EdgeInsets.only(top: 3, bottom: 20),
+          margin: const EdgeInsets.only(top: 5, bottom: 20),
           child: ListView.builder(
             itemCount: 20,
             itemBuilder: (context, index) => infoCard(index),
@@ -33,6 +72,14 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
     );
   }
 
+//--------------------
+  SetDate(DateTime? setDate) {
+    setState(() {
+      currentDate = setDate ?? DateTime.now();
+    });
+  }
+
+//-------------------------------//
   Widget infoCard(int index) {
     return Card(
       color: const Color.fromARGB(255, 243, 243, 243),
@@ -57,13 +104,8 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                     top: 2,
                     child: Row(
                       children: [
-                        const Text(
-                          '14:23 12/11/2022   ',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Color.fromARGB(255, 118, 118, 118)),
-                        ),
+                        Text('14:23 12/11/2022   ',
+                            style: Theme.of(context).textTheme.subtitle1),
                         statusContainer(
                             width: 61,
                             height: 22,
@@ -79,17 +121,16 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                   margin: const EdgeInsets.only(bottom: 7, top: 8),
                   statusText: (index % 2 == 0) ? 'Hoàn thành' : 'Chuẩn bị'),
               DefaultTextStyle(
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                      height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(height: 1.7),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          margin: const EdgeInsets.all(4),
+                          margin: const EdgeInsets.only(left: 4),
                           width: 212,
                           height: 118,
                           child: Column(
@@ -106,7 +147,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                             ],
                           )),
                       Wrap(
-                        spacing: 8,
+                        spacing: 0,
                         direction: Axis.vertical,
                         children: const [
                           Text('Mã số: M39'),
@@ -120,6 +161,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
     );
   }
 
+//------------
   Widget statusContainer({
     double width = 0,
     double height = 0,
@@ -138,11 +180,12 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
           textAlign: TextAlign.center,
           style: const TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 12,
               height: 1.5),
         ),
       );
+  //----------
   Color processColor(String string) {
     switch (string) {
       case 'Chuẩn bị' '':
